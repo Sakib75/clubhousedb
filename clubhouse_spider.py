@@ -17,18 +17,18 @@ class TspSpider(scrapy.Spider):
         self.input_file_name = input_file
 
     def start_requests(self):
-        # df = pd.read_csv(self.input_file_name)
-        # for i in range(0,len(df)):
-        #     data = df.loc[[i]].to_dict()
-        #     url = df.loc[i,'url']
-        #     if(str(url) == 'nan'):
-        #         username = list(data['photo_url'].values())[0]
-        #         if(str(username) != 'nan'):
-        #             url = 'https://www.clubhousedb.com/user/' + username
-        #     if('/user/' in url):
-        #         yield scrapy.Request(url=url, callback=self.parse_data)
+        df = pd.read_csv(self.input_file_name)
+        for i in range(0,len(df)):
+            data = df.loc[[i]].to_dict()
+            url = df.loc[i,'url']
+            if(str(url) == 'nan'):
+                username = list(data['photo_url'].values())[0]
+                if(str(username) != 'nan'):
+                    url = 'https://www.clubhousedb.com/user/' + username
+            if('/user/' in url):
+                yield scrapy.Request(url=url, callback=self.parse_data)
         
-        yield scrapy.Request(url="https://clubhousedb.com/user/christine", callback=self.parse_data)
+        # yield scrapy.Request(url="https://clubhousedb.com/user/christine", callback=self.parse_data)
 
     def parse_data(self, response):
         f = dict()
