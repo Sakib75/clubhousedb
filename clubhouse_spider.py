@@ -53,7 +53,7 @@ class TspSpider(scrapy.Spider):
         f['ref'] = response.xpath("//p[contains(text(),'Invited by: ')]/a/text()").get()
         f['ref_link'] = response.xpath("//p[contains(text(),'Invited by: ')]/a/@href").get()
         users = response.xpath("//section[@class='user-clubs']/div/div/a")
-        f['members_of'] = [{'club_name':''.join(x.xpath('./text()').getall()).strip(), 'club_link': x.xpath("./@href").get()} for x in users]
+        f['members_of'] = [{'club_name':''.join(x.xpath('./text()').getall()).strip(), 'club_link': x.xpath("./@href").get(),'club_picture': x.xpath("./div/img/@src").get()} for x in users]
 
         for k,v in f.items():
             if(v != None):
